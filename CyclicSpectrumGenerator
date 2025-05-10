@@ -1,0 +1,26 @@
+def cyclic_spectrum(peptide):
+
+mass_table = {
+        'G': 57, 'A': 71, 'S': 87, 'P': 97,
+        'V': 99, 'T': 101, 'C': 103, 'I': 113,
+        'L': 113, 'N': 114, 'D': 115, 'K': 128,
+        'Q': 128, 'E': 129, 'M': 131, 'H': 137,
+        'F': 147, 'R': 156, 'Y': 163, 'W': 186
+    }
+
+    total_mass = sum(mass_table[aa] for aa in peptide)
+    spectrum = [0, total_mass]
+
+    n = len(peptide)
+    for length in range(1, n):
+        for i in range(n):
+            subpeptide = (peptide * 2)[i:i + length]
+            spectrum.append(sum(mass_table[aa] for aa in subpeptide))
+
+    spectrum.sort()
+    return spectrum
+
+
+peptide = "PAMHQDLEAVSHY"
+result = cyclic_spectrum(peptide)
+print(" ".join(map(str, result)))
